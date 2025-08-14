@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { ItemsService } from './items.service';
 import type { Item } from './items.model';
 
@@ -31,5 +39,15 @@ export class ItemsController {
       status: 'ON_SALE',
     };
     return this.itemsService.create(item);
+  }
+
+  @Put(':id')
+  updateStatus(@Param('id') id: string) {
+    return this.itemsService.updateStatus(id);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    this.itemsService.delete(id);
   }
 }
