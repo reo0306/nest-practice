@@ -9,35 +9,36 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
-import type { Item } from './items.model';
+import type { Item } from '../../generated/prisma';
 import { CreateItemDto } from './dto/create-item.dto';
+import { Prisma } from '@prisma/client/extension';
 
 @Controller('items')
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Get()
-  findAll(): Item[] {
-    return this.itemsService.findAll();
+  async findAll(): Promise<Item[]> {
+    return await this.itemsService.findAll();
   }
 
   @Get(':id')
-  findBydId(@Param('id', ParseUUIDPipe) id: string): Item {
-    return this.itemsService.findById(id);
+  async findBydId(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
+    return await this.itemsService.findById(id);
   }
 
   @Post()
-  create(@Body() createItemDto: CreateItemDto): Item {
-    return this.itemsService.create(createItemDto);
+  async create(@Body() createItemDto: CreateItemDto): Promise<Item> {
+    return await this.itemsService.create(createItemDto);
   }
 
   @Put(':id')
-  updateStatus(@Param('id', ParseUUIDPipe) id: string) {
-    return this.itemsService.updateStatus(id);
+  async updateStatus(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
+    return await this.itemsService.updateStatus(id);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseUUIDPipe) id: string) {
-    this.itemsService.delete(id);
+  async delete(@Param('id', ParseUUIDPipe) id: string) {
+    await this.itemsService.delete(id);
   }
 }
