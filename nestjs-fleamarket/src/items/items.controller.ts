@@ -11,7 +11,6 @@ import {
 import { ItemsService } from './items.service';
 import type { Item } from '../../generated/prisma';
 import { CreateItemDto } from './dto/create-item.dto';
-import { Prisma } from '@prisma/client/extension';
 
 @Controller('items')
 export class ItemsController {
